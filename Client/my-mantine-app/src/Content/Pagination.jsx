@@ -7,7 +7,8 @@ import { useContext } from "react";
 import WeatherContext from "../context/WeatherContext";
 import { Pagination as Paginated } from '@mantine/core';
 // axios.defaults.baseURL = "http://localhost:4000";
-axios.defaults.baseURL=process.env.BASE_URL
+const BASE_URL = process.env.REACT_APP_BASE_URL;
+axios.defaults.baseURL=BASE_URL
 
 const Pagination = () => {
   const [weather, setWeather] = useState([]);
