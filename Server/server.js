@@ -4,7 +4,7 @@ const dotenv=require("dotenv");
 dotenv.config();
 const axios = require("axios");
 const Redis = require("ioredis");
-const redis = new Redis(process.env.REDIS_URL);
+const redis = new Redis("redis://default:2335839ba184489a839411550b85261b@usw1-busy-pika-34078.upstash.io:34078");
 const app = express();
 app.use(cors());
 const port = process.env.port || 4000;
@@ -123,7 +123,7 @@ const getWeather = async (req,res,next) => {
 
         let apiResponse=await axios.get(finalresponse);
         console.log("the api response response", apiResponse);
-        redis.set(`weather:${page}`,JSON.stringify(apiResponse.data), 'EX', 10)
+        redis.set(`weather:${page}`,JSON.stringify(apiResponse.data), 'EX', 600)
                 // return {...apiResponse.data , "source" : "API" }    
             res.send({...apiResponse.data , "source" : "API", "next":res.locals.final.next ,"previous": res.locals.final.previous , "Total":res.locals.final.total});
     }
